@@ -31,7 +31,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class RequisicaoLicencasApi extends AsyncTask<Object, Object, Object> {
+public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi> {
 
     private AlertDialog.Builder alert;
     private Activity activity;
@@ -60,7 +60,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, Object> {
     }
 
     @Override
-    protected Object doInBackground(Object... params) {
+    protected ResponseApi doInBackground(Object... params) {
 
         try {
             UrlFakeSiac = "https://api.gruposiac.com.br/v1/";
@@ -109,7 +109,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, Object> {
     }
 
     @Override
-    protected void onPostExecute(Object s) {
+    protected void onPostExecute(ResponseApi s) {
         listener.onTaskCompleted(s);
 
         if (progressDialog != null) {

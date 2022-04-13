@@ -7,6 +7,7 @@ import android.os.Bundle;
 import br.com.controle.OnTaskCompleted;
 import br.com.controle.RequisicaoLicencasApi;
 import br.com.controle.entidades.CheckBody;
+import br.com.controle.entidades.ResponseApi;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         new RequisicaoLicencasApi("teste", this, new OnTaskCompleted() {
             @Override
-            public void onTaskCompleted(Object retorno) {
+            public void onTaskCompleted(ResponseApi retorno) {
                 System.out.println("");
             }
         }).execute(new CheckBody("10654550000188",  Util.getImei(getBaseContext())));
