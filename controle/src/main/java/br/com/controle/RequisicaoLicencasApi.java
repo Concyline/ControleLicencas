@@ -33,6 +33,10 @@ import okhttp3.Response;
 
 public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi> {
 
+    public final int SEM_INTERNET = 418;
+    public final int FALHA_URL = 419;
+    public final int EXCEPTION = 420;
+
     private AlertDialog.Builder alert;
     private Activity activity;
     private String msnAlert;
@@ -73,13 +77,13 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
 
             if (UrlFakeSiac == null) {
                 return new ResponseApi(
-                        400, "ERRO: Estão faltando os dados de conexão nas configurações", param.getRout()
+                        FALHA_URL, "ERRO: Estão faltando os dados de conexão nas configurações", param.getRout()
                 );
             }
 
             if (!verificaConexaoInternet(activity)) {
                 return new ResponseApi(
-                        400, "ERRO: Sem conexão com a internet!", param.getRout()
+                        SEM_INTERNET, "ERRO: Sem conexão com a internet!", param.getRout()
                 );
             }
 
@@ -98,7 +102,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
             e.printStackTrace();
 
             return new ResponseApi(
-                    400, "ERRO: " + e.getMessage(), param.getRout()
+                    EXCEPTION, "ERRO: " + e.getMessage(), param.getRout()
             );
         }
     }
