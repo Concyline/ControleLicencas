@@ -33,9 +33,9 @@ import okhttp3.Response;
 
 public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi> {
 
-    public final int SEM_INTERNET = 418;
-    public final int FALHA_URL = 419;
-    public final int EXCEPTION = 420;
+    public static final int SEM_INTERNET = 418;
+    public static final int FALHA_URL = 419;
+    public static final int EXCEPTION = 420;
 
     private AlertDialog.Builder alert;
     private Activity activity;
