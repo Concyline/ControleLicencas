@@ -150,7 +150,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
         Request request = new Request.Builder()
                 .url(URL)
                 .method(param.getMethod(), body)
-                .addHeader("X-API-TIMESTAMP", TimestampUtils.getISO8601StringForCurrentDate())
+                .addHeader("X-API-TIMESTAMP", TimestampUtils.getISOStringForCurrentDate())
                 .addHeader("Authorization", credential)
                 .build();
 

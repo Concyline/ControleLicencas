@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         new RequisicaoLicencasApi("teste", this, new OnTaskCompleted() {
             @Override
             public void onTaskCompleted(ResponseApi retorno) {
-                System.out.println("");
+                System.out.println(retorno.getBody());
             }
         }).execute(new CheckBody("10654550000188",  Util.getImei(getBaseContext())));
     }
