@@ -2,34 +2,21 @@ package br.com.controle.entidades;
 
 public class Param {
 
+    public static String POST = "POST";
+    public static String GET = "GET";
+
     public String method;
     public String rout;
     public String content;
     public String token;
     public String authorization;
 
-    public Param(String method, String rout, String content, String authorization) {
-        this.method = method;
-        this.rout = rout;
-        this.content = content;
-        this.token = null;
-        this.authorization = authorization;
-    }
-
-    public Param(String method, String rout, String authorization) {
-        this.method = method;
-        this.rout = rout;
-        this.content = null;
-        this.token = null;
-        this.authorization = authorization;
-    }
-
-    public Param(String method, String rout) {
-        this.method = method;
-        this.rout = rout;
-        this.content = null;
-        this.token = null;
-        this.authorization = null;
+    public Param(Builder builder){
+        this.method = builder.method;
+        this.rout = builder.rout;
+        this.content = builder.content;
+        this.token = builder.token;
+        this.authorization = builder.authorization;
     }
 
     public String getMethod() {
@@ -71,4 +58,44 @@ public class Param {
     public void setAuthorization(String authorization) {
         this.authorization = authorization;
     }
+
+
+    public static class Builder{
+
+        public String method;
+        public String rout;
+        public String content;
+        public String token;
+        public String authorization;
+
+        public Builder method(String method){
+            this.method = method;
+            return this;
+        }
+
+        public Builder rout(String rout){
+            this.rout = rout;
+            return this;
+        }
+
+        public Builder content(String content){
+            this.content = content;
+            return this;
+        }
+
+        public Builder token(String token){
+            this.token = token;
+            return this;
+        }
+
+        public Builder authorization(String authorization){
+            this.authorization = authorization;
+            return this;
+        }
+
+        public Param build(){
+            return new Param(this);
+        }
+    }
+
 }

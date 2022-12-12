@@ -1,4 +1,4 @@
-package br.com.controle;
+package br.com.controle.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

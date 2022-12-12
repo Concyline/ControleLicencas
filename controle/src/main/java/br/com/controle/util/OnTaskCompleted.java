@@ -1,4 +1,4 @@
-package br.com.controle;
+package br.com.controle.util;
 
 import br.com.controle.entidades.ResponseApi;
 

@@ -19,10 +19,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import br.com.controle.entidades.CheckBody;
 import br.com.controle.entidades.LoginLicenca;
 import br.com.controle.entidades.Param;
 import br.com.controle.entidades.ResponseApi;
+import br.com.controle.util.OnTaskCompleted;
+import br.com.controle.util.TimestampUtils;
 import okhttp3.Credentials;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -44,7 +45,8 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
     private ProgressDialog progressDialog;
     private Gson gson;
     private Param param;
-    private CheckBody checkBody = null;
+    //private CheckBody checkBody = null;
+
     private String UrlFakeSiac;
 
     public RequisicaoLicencasApi(String msnAlert, Activity ctx, OnTaskCompleted listener) {
@@ -70,10 +72,16 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
             UrlFakeSiac = "https://api.gruposiac.com.br/v1/";
 
             if(params != null && params.length > 0){
-                checkBody = (CheckBody) params[0];
+               param = (Param) params[0];
             }
 
-            param = new Param("POST", "licenses/check", gson.toJson(checkBody),"BEARER");
+            if(param == null){
+                return new ResponseApi(
+                        EXCEPTION, "ERRO: Falha na passagem de parametros, revise o objeto Param passado no execute!", param.getRout()
+                );
+            }
+
+            param.setAuthorization("BEARER");
 
             if (UrlFakeSiac == null) {
                 return new ResponseApi(
@@ -182,7 +190,12 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
 
     private ResponseApi getToken() throws Exception {
 
-        Param param = new Param("POST", "siac/auth/login", "BASIC");
+        //Param param = new Param("POST", "siac/auth/login", "BASIC");
+        Param param = new Param.Builder()
+                .method(Param.POST)
+                .rout("siac/auth/login")
+                .authorization("BASIC")
+                .build();
 
         ResponseApi responseApi = call(param);
 
