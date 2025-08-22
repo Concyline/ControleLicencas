@@ -8,8 +8,6 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.security.cert.CertificateException;
 
 import javax.net.ssl.HostnameVerifier;
@@ -22,6 +20,7 @@ import javax.net.ssl.X509TrustManager;
 import br.com.controle.entidades.LoginLicenca;
 import br.com.controle.entidades.Param;
 import br.com.controle.entidades.ResponseApi;
+import br.com.controle.util.GsonBuilder;
 import br.com.controle.util.OnTaskCompleted;
 import br.com.controle.util.TimestampUtils;
 import okhttp3.Credentials;
@@ -43,9 +42,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
     private String msnAlert;
     private OnTaskCompleted listener;
     private ProgressDialog progressDialog;
-    private Gson gson;
     private Param param;
-    //private CheckBody checkBody = null;
 
     private String UrlFakeSiac;
 
@@ -54,8 +51,6 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
         this.activity = ctx;
         alert = new AlertDialog.Builder(activity);
         this.listener = listener;
-
-        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
     }
 
     @Override
@@ -71,11 +66,11 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
         try {
             UrlFakeSiac = "https://api.gruposiac.com.br/v1/";
 
-            if(params != null && params.length > 0){
-               param = (Param) params[0];
+            if (params != null && params.length > 0) {
+                param = (Param) params[0];
             }
 
-            if(param == null){
+            if (param == null) {
                 return new ResponseApi(
                         EXCEPTION, "ERRO: Falha na passagem de parametros, revise o objeto Param passado no execute!", param.getRout()
                 );
@@ -141,15 +136,15 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
 
         if (param.getContent() != null) {
             body = RequestBody.create(param.getContent(), MediaType.parse("application/json"));
-        }else{
+        } else {
             body = RequestBody.create(MediaType.parse("text/plain"), "");
         }
 
         URL = UrlFakeSiac + param.getRout();
 
-        if(param.getAuthorization().equals("BASIC")) {
+        if (param.getAuthorization().equals("BASIC")) {
             credential = Credentials.basic("SIAC", "$2a$12$XtsNQ1SorHKRY5JMws9Mru.E.jRLZfkYak7eIbVRZoupv0zZqito2");
-        }else{
+        } else {
             credential = "Bearer " + param.getToken();
         }
 
@@ -190,7 +185,6 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
 
     private ResponseApi getToken() throws Exception {
 
-        //Param param = new Param("POST", "siac/auth/login", "BASIC");
         Param param = new Param.Builder()
                 .method(Param.POST)
                 .rout("siac/auth/login")
@@ -203,7 +197,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
             return responseApi;
         }
 
-        LoginLicenca loginLicenca = gson.fromJson(responseApi.getBody(), LoginLicenca.class);
+        LoginLicenca loginLicenca = GsonBuilder.fromJson(responseApi.getBody(), LoginLicenca.class);
 
         if (loginLicenca == null) {
             return new ResponseApi(
@@ -215,9 +209,9 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
 
     }
 
-    public  okhttp3.OkHttpClient getUnsafeOkHttpClient() {
+    public okhttp3.OkHttpClient getUnsafeOkHttpClient() {
         try {
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void
@@ -243,7 +237,7 @@ public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi
             final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             okhttp3.OkHttpClient.Builder builder = new okhttp3.OkHttpClient.Builder();
-            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {

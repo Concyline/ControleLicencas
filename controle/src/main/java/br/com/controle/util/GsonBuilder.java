@@ -14,11 +14,11 @@ public class GsonBuilder {
         return gson.toJson(value);
     }
 
-    public static  <T> T fronJson(String value, Class c) throws Exception{
+    public static  <T> T fromJson(String value, Class c) throws Exception{
         return (T) gson.fromJson(value, c);
     }
 
-    public static  <T> List<T> fronJsonList(String value, Class c) throws Exception{
+    public static  <T> List<T> fronJsomList(String value, Class c) throws Exception{
         Type typeOfT = TypeToken.getParameterized(List.class, c).getType();
         return (List<T>) gson.fromJson(value, typeOfT);
     }
