@@ -22,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
             CheckBody checkBody = new CheckBody.Builder()
                     .document("10654550000188")
-                    .license(Util.getImei(getBaseContext()))
+                    .document("10654550000188")
+                    //.license("352364855231829")
+                    .license("352399795231828")
+                    //.license(Util.getImei(getBaseContext()))
                     .build();
 
             Param param = new Param.Builder()

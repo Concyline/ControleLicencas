@@ -20,6 +20,7 @@ import javax.net.ssl.X509TrustManager;
 import br.com.controle.entidades.LoginLicenca;
 import br.com.controle.entidades.Param;
 import br.com.controle.entidades.ResponseApi;
+import br.com.controle.task.Task;
 import br.com.controle.util.GsonBuilder;
 import br.com.controle.util.OnTaskCompleted;
 import br.com.controle.util.TimestampUtils;
@@ -31,7 +32,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class RequisicaoLicencasApi extends AsyncTask<Object, Object, ResponseApi> {
+public class RequisicaoLicencasApi extends Task<Object, Object, ResponseApi> {
 
     public static final int SEM_INTERNET = 418;
     public static final int FALHA_URL = 419;
